@@ -7,6 +7,30 @@ plugins {
     id 'application'
 }
 
+/**
+ * 获取环境变量方法
+ * @param key KEY
+ * @return Value
+ */
+String getEnvValue(String key) {
+    Object value = System.getenv(key)
+    if (value != null) {
+        println "getEnvValue System.getenv(${key})"
+        return value
+    }
+    value = System.getProperty(key)
+    if (value != null) {
+        println "getEnvValue System.getProperty(${key})"
+        return value
+    }
+    value = properties.get(key)
+    if (value != null) {
+        println "getEnvValue properties.get(${key})"
+        return value
+    }
+    return null
+}
+
 allprojects {
     plugins.apply('java')
     plugins.apply('idea')
@@ -84,16 +108,21 @@ subprojects {
 
     publishing {
         publications {
-            mavenJava(MavenPublication) {
+            library(MavenPublication) {
                 from components.java
-                versionMapping {
-                    usage('java-api') {
-                        fromResolutionOf('runtimeClasspath')
-                    }
-                    usage('java-runtime') {
-                        fromResolutionResult()
-                    }
+            }
+        }
+        repositories {
+            maven {
+                credentials {
+                    username getEnvValue('maven.username')
+                    password getEnvValue('maven.password')
                 }
+                // 正式环境
+                def releasesRepoUrl = getEnvValue('maven.repo.release')
+                // 非正式环境库
+                def snapshotsRepoUrl = getEnvValue('maven.repo.snapshot')
+                url version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
             }
         }
     }
