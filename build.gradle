@@ -1,0 +1,113 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.3' apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+    id 'maven-publish'
+    id 'java'
+    id 'idea'
+    id 'application'
+}
+
+allprojects {
+    plugins.apply('java')
+    plugins.apply('idea')
+    plugins.apply('application')
+    plugins.apply('maven-publish')
+
+    group = 'com.houkunlin'
+    version = '0.0.1-SNAPSHOT'
+
+    ext.javaTargetVersion = '1.8'
+
+    repositories {
+        // central仓（https://repo1.maven.org/maven2/）和jcenter仓（http://jcenter.bintray.com/）的聚合仓
+        maven { url "https://maven.aliyun.com/repository/public" }
+        // spring仓库，源地址：http://repo.spring.io/libs-milestone/
+        maven { url "https://maven.aliyun.com/repository/spring" }
+        // spring插件仓库，源地址：http://repo.spring.io/plugins-release/
+        maven { url "https://maven.aliyun.com/repository/spring-plugin" }
+        // google仓库，源地址：https://maven.google.com/
+        maven { url "https://maven.aliyun.com/repository/google" }
+        // google插件仓库，源地址：https://plugins.gradle.org/m2/
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+
+        maven { url "https://mirrors.163.com/maven/repository/maven-central/" }
+        maven { url "https://mirrors.163.com/maven/repository/maven-public/" }
+        maven { url "https://mirrors.163.com/maven/repository/maven-releases/" }
+
+        maven { url "https://jitpack.io" }
+
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+
+    compileJava {
+        options.encoding = "UTF-8"
+        sourceCompatibility = javaTargetVersion
+        targetCompatibility = javaTargetVersion
+    }
+}
+
+subprojects {
+    plugins.apply('org.springframework.boot')
+    plugins.apply('io.spring.dependency-management')
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    jar {
+        enabled = true
+    }
+
+    java {
+        withJavadocJar()
+        withSourcesJar()
+    }
+
+    javadoc {
+        enabled = true
+        options.encoding = "UTF-8"
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption('html5', true)
+        }
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                versionMapping {
+                    usage('java-api') {
+                        fromResolutionOf('runtimeClasspath')
+                    }
+                    usage('java-runtime') {
+                        fromResolutionResult()
+                    }
+                }
+            }
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-autoconfigure'
+
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+}
