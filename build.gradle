@@ -1,11 +1,14 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.3' apply false
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+    id 'org.springframework.boot' version '2.4.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'maven-publish'
     id 'java-library'
     id 'application'
     id 'idea'
 }
+
+group = 'com.houkunlin'
+version = '0.0.1-SNAPSHOT'
 
 /**
  * 获取环境变量方法
@@ -31,112 +34,102 @@ String getEnvValue(String key) {
     return null
 }
 
-allprojects {
-    plugins.apply('java')
-    plugins.apply('idea')
-    plugins.apply('application')
-    plugins.apply('maven-publish')
+repositories {
+    // central仓（https://repo1.maven.org/maven2/）和jcenter仓（http://jcenter.bintray.com/）的聚合仓
+    maven { url "https://maven.aliyun.com/repository/public" }
+    // spring仓库，源地址：http://repo.spring.io/libs-milestone/
+    maven { url "https://maven.aliyun.com/repository/spring" }
+    // spring插件仓库，源地址：http://repo.spring.io/plugins-release/
+    maven { url "https://maven.aliyun.com/repository/spring-plugin" }
+    // google仓库，源地址：https://maven.google.com/
+    maven { url "https://maven.aliyun.com/repository/google" }
+    // google插件仓库，源地址：https://plugins.gradle.org/m2/
+    maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
 
-    group = 'com.houkunlin'
-    version = '0.0.1-SNAPSHOT'
+    // maven { url "https://mirrors.163.com/maven/repository/maven-central/" }
+    // maven { url "https://mirrors.163.com/maven/repository/maven-public/" }
+    // maven { url "https://mirrors.163.com/maven/repository/maven-releases/" }
 
-    ext.javaTargetVersion = '1.8'
+    maven { url "https://jitpack.io" }
 
-    repositories {
-        // central仓（https://repo1.maven.org/maven2/）和jcenter仓（http://jcenter.bintray.com/）的聚合仓
-        maven { url "https://maven.aliyun.com/repository/public" }
-        // spring仓库，源地址：http://repo.spring.io/libs-milestone/
-        maven { url "https://maven.aliyun.com/repository/spring" }
-        // spring插件仓库，源地址：http://repo.spring.io/plugins-release/
-        maven { url "https://maven.aliyun.com/repository/spring-plugin" }
-        // google仓库，源地址：https://maven.google.com/
-        maven { url "https://maven.aliyun.com/repository/google" }
-        // google插件仓库，源地址：https://plugins.gradle.org/m2/
-        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
 
-        maven { url "https://mirrors.163.com/maven/repository/maven-central/" }
-        maven { url "https://mirrors.163.com/maven/repository/maven-public/" }
-        maven { url "https://mirrors.163.com/maven/repository/maven-releases/" }
-
-        maven { url "https://jitpack.io" }
-
-        mavenLocal()
-        mavenCentral()
-        jcenter()
-    }
-
-    idea {
-        module {
-            downloadJavadoc = true
-            downloadSources = true
-        }
-    }
-
-    compileJava {
-        options.encoding = "UTF-8"
-        sourceCompatibility = javaTargetVersion
-        targetCompatibility = javaTargetVersion
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
     }
 }
 
-subprojects {
-    plugins.apply('org.springframework.boot')
-    plugins.apply('io.spring.dependency-management')
+ext.javaTargetVersion = '1.8'
 
-    configurations {
-        compileOnly {
-            extendsFrom annotationProcessor
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+
+    compile 'com.littlenb:snowflake:1.0.5'
+
+    compileOnly 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compileOnly 'com.baomidou:mybatis-plus-boot-starter:3.4.2'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+publishing {
+    publications {
+        library(MavenPublication) {
+            from components.java
         }
     }
-
-    jar {
-        enabled = true
-    }
-
-    java {
-        withJavadocJar()
-        withSourcesJar()
-    }
-
-    javadoc {
-        enabled = true
-        options.encoding = "UTF-8"
-        if (JavaVersion.current().isJava9Compatible()) {
-            options.addBooleanOption('html5', true)
-        }
-    }
-
-    publishing {
-        publications {
-            library(MavenPublication) {
-                from components.java
+    repositories {
+        maven {
+            credentials {
+                username getEnvValue('maven.username')
+                password getEnvValue('maven.password')
             }
-        }
-        repositories {
-            maven {
-                credentials {
-                    username getEnvValue('maven.username')
-                    password getEnvValue('maven.password')
-                }
-                // 正式环境
-                def releasesRepoUrl = getEnvValue('maven.repo.release')
-                // 非正式环境库
-                def snapshotsRepoUrl = getEnvValue('maven.repo.snapshot')
-                url version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-            }
+            // 正式环境
+            def releasesRepoUrl = getEnvValue('maven.repo.release')
+            // 非正式环境库
+            def snapshotsRepoUrl = getEnvValue('maven.repo.snapshot')
+            url version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
         }
     }
+}
 
-    test {
-        useJUnitPlatform()
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
     }
+}
 
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter'
-        implementation 'org.springframework.boot:spring-boot-autoconfigure'
+jar {
+    enabled = true
+}
 
-        developmentOnly 'org.springframework.boot:spring-boot-devtools'
-        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+javadoc {
+    enabled = true
+    options.encoding = "UTF-8"
+    options.addStringOption('Xdoclint:none', '-quiet')
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
     }
+}
+compileJava {
+    options.encoding = "UTF-8"
+    sourceCompatibility = javaTargetVersion
+    targetCompatibility = javaTargetVersion
+}
+
+test {
+    useJUnitPlatform()
 }

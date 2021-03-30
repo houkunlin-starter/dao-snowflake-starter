@@ -1,3 +1,0 @@
-dependencies {
-    compile 'com.littlenb:snowflake:1.0.5'
-}

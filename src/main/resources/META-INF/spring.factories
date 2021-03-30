@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.houkunlin.snowflake.starter.SnowflakeConfiguration
+  com.houkunlin.snowflake.starter.SnowflakeStarter

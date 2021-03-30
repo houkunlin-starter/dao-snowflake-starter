@@ -1,3 +1,1 @@
-rootProject.name = 'snowflake-spring-boot'
-include('snowflake-spring-boot-starter')
-include('snowflake-spring-boot-starter-data-jpa')
+rootProject.name = 'snowflake-spring-boot-starter'
