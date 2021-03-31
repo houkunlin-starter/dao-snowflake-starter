@@ -28,7 +28,7 @@ public class SnowflakeHibernatePropertiesCustomizer implements HibernateProperti
     private final Map<String, Class<?>> map = new HashMap<>();
 
     public SnowflakeHibernatePropertiesCustomizer() {
-        map.put("snowflake", SnowflakeIdentifierGenerator.class);
+        map.put("snowflake", JpaSnowflakeIdentifierGenerator.class);
     }
 
     @Override

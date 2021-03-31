@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
  */
 @ConditionalOnClass(IdentifierGenerator.class)
 @Component
-public class SnowflakeIdentifierGenerator implements IdentifierGenerator {
+public class MybatisPlusSnowflakeIdentifierGenerator implements IdentifierGenerator {
     private final IdGenerator idGenerator;
 
-    public SnowflakeIdentifierGenerator(IdGenerator idGenerator) {
+    public MybatisPlusSnowflakeIdentifierGenerator(IdGenerator idGenerator) {
         this.idGenerator = idGenerator;
     }
 

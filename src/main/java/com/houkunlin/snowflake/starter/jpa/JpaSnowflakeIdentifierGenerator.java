@@ -30,9 +30,9 @@ import java.util.Properties;
  */
 @ConditionalOnClass(IdentifierGenerator.class)
 @Component
-public class SnowflakeIdentifierGenerator implements IdentifierGenerator, Configurable, ApplicationContextAware, InitializingBean {
-    public static final String CLASS_NAME = SnowflakeIdentifierGenerator.class.getSimpleName();
-    private static final Logger logger = LoggerFactory.getLogger(SnowflakeIdentifierGenerator.class);
+public class JpaSnowflakeIdentifierGenerator implements IdentifierGenerator, Configurable, ApplicationContextAware, InitializingBean {
+    public static final String CLASS_NAME = JpaSnowflakeIdentifierGenerator.class.getSimpleName();
+    private static final Logger logger = LoggerFactory.getLogger(JpaSnowflakeIdentifierGenerator.class);
     /**
      * 由于 Hibernate 的主键策略是多实例的，每一个 Entity 对应一个 IdentifierGenerator 实例，即使同一个策略，也会因为不同的 Entity 而创建实例。
      * 因此这里必须提供一个静态的属性，可供多个主键策略实例共享同一个 IdGenerator 雪花算法实例
@@ -86,6 +86,6 @@ public class SnowflakeIdentifierGenerator implements IdentifierGenerator, Config
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        SnowflakeIdentifierGenerator.applicationContext = applicationContext;
+        JpaSnowflakeIdentifierGenerator.applicationContext = applicationContext;
     }
 }
