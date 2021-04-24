@@ -2,52 +2,8 @@
   "groups": [
     {
       "sourceType": "com.houkunlin.snowflake.starter.SnowflakeProperties",
-      "name": "snowflake",
+      "name": "dao.snowflake",
       "type": "com.houkunlin.snowflake.starter.SnowflakeProperties"
-    }
-  ],
-  "properties": [
-    {
-      "sourceType": "com.houkunlin.snowflake.starter.SnowflakeProperties",
-      "name": "snowflake.time-bits",
-      "defaultValue": "41",
-      "description": "增量毫秒长度",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.houkunlin.snowflake.starter.SnowflakeProperties",
-      "name": "snowflake.worker-bits",
-      "defaultValue": "10",
-      "description": "数据中心长度",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.houkunlin.snowflake.starter.SnowflakeProperties",
-      "name": "snowflake.seq-bits",
-      "defaultValue": "12",
-      "description": "随机序列长度",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.houkunlin.snowflake.starter.SnowflakeProperties",
-      "name": "snowflake.epoch-timestamp",
-      "defaultValue": "1577808000000",
-      "description": "开始时间戳，默认 UTC 2020-01-01 00:00:00",
-      "type": "java.lang.Long"
-    },
-    {
-      "sourceType": "com.houkunlin.snowflake.starter.SnowflakeProperties",
-      "name": "snowflake.time-unit",
-      "defaultValue": "milliseconds",
-      "description": "时间单位",
-      "type": "java.util.concurrent.TimeUnit"
-    },
-    {
-      "sourceType": "com.houkunlin.snowflake.starter.SnowflakeProperties",
-      "name": "snowflake.worker-id",
-      "defaultValue": "1",
-      "description": "数据中心ID",
-      "type": "java.lang.Long"
     }
   ]
 }
