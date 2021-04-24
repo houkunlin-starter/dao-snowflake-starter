@@ -9,6 +9,7 @@ plugins {
 
 group = 'com.houkunlin'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
 
 /**
  * 获取环境变量方法
@@ -34,36 +35,15 @@ String getEnvValue(String key) {
     return null
 }
 
-repositories {
-    // central仓（https://repo1.maven.org/maven2/）和jcenter仓（http://jcenter.bintray.com/）的聚合仓
-    maven { url "https://maven.aliyun.com/repository/public" }
-    // spring仓库，源地址：http://repo.spring.io/libs-milestone/
-    maven { url "https://maven.aliyun.com/repository/spring" }
-    // spring插件仓库，源地址：http://repo.spring.io/plugins-release/
-    maven { url "https://maven.aliyun.com/repository/spring-plugin" }
-    // google仓库，源地址：https://maven.google.com/
-    maven { url "https://maven.aliyun.com/repository/google" }
-    // google插件仓库，源地址：https://plugins.gradle.org/m2/
-    maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
-
-    // maven { url "https://mirrors.163.com/maven/repository/maven-central/" }
-    // maven { url "https://mirrors.163.com/maven/repository/maven-public/" }
-    // maven { url "https://mirrors.163.com/maven/repository/maven-releases/" }
-
-    maven { url "https://jitpack.io" }
-
-    mavenLocal()
-    mavenCentral()
-    jcenter()
-}
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
 }
 
-ext.javaTargetVersion = '1.8'
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -76,6 +56,7 @@ dependencies {
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -85,19 +66,23 @@ publishing {
             from components.java
         }
     }
-    repositories {
-        maven {
-            credentials {
-                username getEnvValue('maven.username')
-                password getEnvValue('maven.password')
-            }
-            // 正式环境
-            def releasesRepoUrl = getEnvValue('maven.repo.release')
-            // 非正式环境库
-            def snapshotsRepoUrl = getEnvValue('maven.repo.snapshot')
-            url version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-        }
-    }
+    // repositories {
+    //     maven {
+    //         credentials {
+    //             username getEnvValue('maven.username')
+    //             password getEnvValue('maven.password')
+    //         }
+    //         // 正式环境
+    //         def releasesRepoUrl = getEnvValue('maven.repo.release')
+    //         // 非正式环境库
+    //         def snapshotsRepoUrl = getEnvValue('maven.repo.snapshot')
+    //         url version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+    //     }
+    // }
+}
+
+bootJar {
+    enabled = false
 }
 
 idea {
@@ -124,10 +109,9 @@ javadoc {
         options.addBooleanOption('html5', true)
     }
 }
+
 compileJava {
     options.encoding = "UTF-8"
-    sourceCompatibility = javaTargetVersion
-    targetCompatibility = javaTargetVersion
 }
 
 test {
