@@ -1,4 +1,4 @@
-package com.houkunlin.snowflake.starter.jpa;
+package com.houkunlin.dao.snowflake.starter.jpa;
 
 import com.littlenb.snowflake.sequence.IdGenerator;
 import org.hibernate.HibernateException;

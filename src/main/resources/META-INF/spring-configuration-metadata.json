@@ -1,9 +1,9 @@
 {
   "groups": [
     {
-      "sourceType": "com.houkunlin.snowflake.starter.SnowflakeProperties",
+      "sourceType": "com.houkunlin.dao.snowflake.starter.SnowflakeProperties",
       "name": "dao.snowflake",
-      "type": "com.houkunlin.snowflake.starter.SnowflakeProperties"
+      "type": "com.houkunlin.dao.snowflake.starter.SnowflakeProperties"
     }
   ]
 }

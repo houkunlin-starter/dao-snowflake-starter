@@ -1,4 +1,4 @@
-package com.houkunlin.snowflake.starter;
+package com.houkunlin.dao.snowflake.starter;
 
 import com.littlenb.snowflake.sequence.IdGenerator;
 import com.littlenb.snowflake.support.ElasticIdGeneratorFactory;

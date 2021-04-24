@@ -1,4 +1,4 @@
-package com.houkunlin.snowflake.starter.mybatisplus;
+package com.houkunlin.dao.snowflake.starter.mybatisplus;
 
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.littlenb.snowflake.sequence.IdGenerator;

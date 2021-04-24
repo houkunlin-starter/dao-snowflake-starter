@@ -1,4 +1,4 @@
-package com.houkunlin.snowflake.starter.jpa;
+package com.houkunlin.dao.snowflake.starter.jpa;
 
 import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.jpa.AvailableSettings;

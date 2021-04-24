@@ -19,7 +19,7 @@ com.littlenb:snowflake
 
 ## 配置文件支持
 
-配置文件：`com.houkunlin.snowflake.starter.SnowflakeProperties`
+配置文件：`com.houkunlin.dao.snowflake.starter.SnowflakeProperties`
 
 | KEY | Default | Remark |
 | ----------------------------- | --------------------- |---------------------------------------- |

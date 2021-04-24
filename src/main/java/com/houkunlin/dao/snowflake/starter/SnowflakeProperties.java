@@ -1,4 +1,4 @@
-package com.houkunlin.snowflake.starter;
+package com.houkunlin.dao.snowflake.starter;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
