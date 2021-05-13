@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/houkunlin/dao-snowflake-starter.svg)](https://jitpack.io/#houkunlin/dao-snowflake-starter)
+
 # DAO 雪花算法 Starter
 
 雪花算法依赖：
