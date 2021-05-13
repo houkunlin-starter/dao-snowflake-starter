@@ -50,7 +50,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
 
-    compile 'com.littlenb:snowflake:1.0.5'
+    api 'com.littlenb:snowflake:1.0.5'
 
     compileOnly 'org.springframework.boot:spring-boot-starter-data-jpa'
     compileOnly 'com.baomidou:mybatis-plus-boot-starter:3.4.2'
