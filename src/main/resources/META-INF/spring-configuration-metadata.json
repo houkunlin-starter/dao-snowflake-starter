@@ -1,9 +1,0 @@
-{
-  "groups": [
-    {
-      "sourceType": "com.houkunlin.dao.snowflake.starter.SnowflakeProperties",
-      "name": "dao.snowflake",
-      "type": "com.houkunlin.dao.snowflake.starter.SnowflakeProperties"
-    }
-  ]
-}
