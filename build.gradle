@@ -10,7 +10,7 @@ plugins {
 }
 
 group = 'com.houkunlin'
-version = '1.0.0'
+version = '1.0.1'
 sourceCompatibility = '1.8'
 
 configurations {
@@ -69,7 +69,7 @@ publishing {
                 scm {
                     connection = 'scm:git://github.com/houkunlin/dao-snowflake-starter.git'
                     developerConnection = 'scm:git://github.com/houkunlin/dao-snowflake-starter.git'
-                    url = 'git://github.com/houkunlin/system-dic-starter.git'
+                    url = 'git://github.com/houkunlin/dao-snowflake-starter.git'
                 }
             }
         }
