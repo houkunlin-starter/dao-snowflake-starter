@@ -1,7 +1,7 @@
 package com.houkunlin.dao.snowflake.starter.jpa;
 
+import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.id.IdentifierGenerator;
-import org.hibernate.jpa.AvailableSettings;
 import org.hibernate.jpa.spi.IdentifierGeneratorStrategyProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;

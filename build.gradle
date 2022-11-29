@@ -1,7 +1,7 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.4'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id "io.freefair.lombok" version "6.1.0"
+    id 'org.springframework.boot' version '3.0.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id "io.freefair.lombok" version "6.5.1"
     id 'maven-publish'
     id 'signing'
     id 'java-library'
@@ -10,10 +10,9 @@ plugins {
 }
 
 group = 'com.houkunlin'
-version = '1.0.2-BUILD-SNAPSHOT'
-sourceCompatibility = '1.8'
+version = '1.1.0'
 
-def gitRepo = "github.com/houkunlin/dao-snowflake-starter.git"
+def gitRepo = "github.com/houkunlin-starter/dao-snowflake-starter.git"
 def isSnapshot = findProperty("snapshot") != null || version.endsWith('SNAPSHOT')
 
 if (isSnapshot && !version.endsWith('SNAPSHOT')) {
@@ -27,9 +26,10 @@ configurations {
 }
 
 repositories {
-    maven { url 'https://maven.aliyun.com/repository/public' }
-    maven { url 'https://repo.spring.io/release' }
+    mavenLocal()
     mavenCentral()
+    // Spring 里程碑仓库
+    maven { url 'https://repo.spring.io/artifactory/libs-milestone/' }
 }
 
 dependencies {
@@ -39,7 +39,7 @@ dependencies {
     api 'com.littlenb:snowflake:1.0.5'
 
     compileOnly 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compileOnly 'com.baomidou:mybatis-plus-boot-starter:3.4.3.3'
+    compileOnly 'com.baomidou:mybatis-plus-boot-starter:3.5.2'
 
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
     testAnnotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'

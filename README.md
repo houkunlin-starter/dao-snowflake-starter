@@ -2,6 +2,8 @@
 
 # DAO 雪花算法 Starter
 
+> v1.1.0 起基于 SpringBoot 3.0.0 编译发布，JDK 最低要求 JDK17
+
 雪花算法依赖：
 ```
 com.littlenb:snowflake

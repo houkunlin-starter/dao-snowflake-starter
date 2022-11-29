@@ -4,13 +4,12 @@ import com.littlenb.snowflake.sequence.IdGenerator;
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
-import org.hibernate.id.Configurable;
 import org.hibernate.id.IdentifierGenerationException;
 import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.type.DiscriminatorType;
-import org.hibernate.type.StringType;
+import org.hibernate.type.BasicType;
 import org.hibernate.type.Type;
+import org.hibernate.type.descriptor.java.StringJavaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -30,7 +29,7 @@ import java.util.Properties;
  */
 @ConditionalOnClass(IdentifierGenerator.class)
 @Component
-public class JpaSnowflakeIdentifierGenerator implements IdentifierGenerator, Configurable, ApplicationContextAware, InitializingBean {
+public class JpaSnowflakeIdentifierGenerator implements IdentifierGenerator, ApplicationContextAware, InitializingBean {
     public static final String CLASS_NAME = JpaSnowflakeIdentifierGenerator.class.getSimpleName();
     private static final Logger logger = LoggerFactory.getLogger(JpaSnowflakeIdentifierGenerator.class);
     /**
@@ -46,12 +45,12 @@ public class JpaSnowflakeIdentifierGenerator implements IdentifierGenerator, Con
     /**
      * Entity 的主键字段类型
      */
-    private DiscriminatorType<?> identifierType;
+    private BasicType<?> identifierType;
 
     @Override
     public void configure(Type type, Properties params, ServiceRegistry serviceRegistry) throws MappingException {
-        if (type instanceof DiscriminatorType<?>) {
-            this.identifierType = (DiscriminatorType<?>) type;
+        if (type instanceof BasicType) {
+            this.identifierType = (BasicType<?>) type;
         } else {
             throw new IdentifierGenerationException("identifier property type error");
         }
@@ -71,7 +70,7 @@ public class JpaSnowflakeIdentifierGenerator implements IdentifierGenerator, Con
             logger.debug("{} generate {} : {}", CLASS_NAME, entityName, nextId);
             // IdentifierGeneratorHelper.getIntegralDataTypeHolder(null).initialize(0).makeValue()
         }
-        if (identifierType instanceof StringType) {
+        if (identifierType instanceof StringJavaType) {
             // 这里只考虑一个特殊的 String 类型的主键，其他的暂时一律返回 Long 值
             return "" + nextId;
         }
