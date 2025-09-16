@@ -53,9 +53,9 @@ public class SnowflakeConfiguration {
         return idGeneratorFactory.create(workerIdAssigner);
     }
 
+    @ConditionalOnClass(com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator.class)
     @Configuration(proxyBeanMethods = false)
     public static class MyBatisSnowflakeConfiguration {
-        @ConditionalOnClass(com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator.class)
         @ConditionalOnMissingBean(com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator.class)
         @Bean
         public MybatisPlusSnowflakeIdentifierGenerator mybatisPlusSnowflakeIdentifierGenerator(IdGenerator idGenerator) {
@@ -63,10 +63,10 @@ public class SnowflakeConfiguration {
         }
     }
 
+    @ConditionalOnClass(org.hibernate.id.IdentifierGenerator.class)
     @Configuration(proxyBeanMethods = false)
     public static class HibernateJpaConfiguration {
 
-        @ConditionalOnClass(org.hibernate.id.IdentifierGenerator.class)
         @ConditionalOnMissingBean(org.hibernate.id.IdentifierGenerator.class)
         @Bean
         public JpaSnowflakeIdentifierGenerator jpaSnowflakeIdentifierGenerator() {
