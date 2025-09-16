@@ -1,1 +1,2 @@
-com.houkunlin.dao.snowflake.starter.SnowflakeStarter
+com.houkunlin.dao.snowflake.starter.SnowflakeProperties
+com.houkunlin.dao.snowflake.starter.SnowflakeConfiguration

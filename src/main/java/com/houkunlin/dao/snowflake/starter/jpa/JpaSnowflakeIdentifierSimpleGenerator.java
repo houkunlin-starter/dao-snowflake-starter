@@ -1,6 +1,7 @@
 package com.houkunlin.dao.snowflake.starter.jpa;
 
 import com.littlenb.snowflake.sequence.IdGenerator;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
@@ -12,10 +13,6 @@ import org.hibernate.type.Type;
 import org.hibernate.type.descriptor.java.StringJavaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 import java.io.Serializable;
 import java.util.Properties;
@@ -25,15 +22,11 @@ import java.util.Properties;
  *
  * @author HouKunLin
  */
-public class JpaSnowflakeIdentifierGenerator implements IdentifierGenerator, ApplicationContextAware, InitializingBean {
-    public static final String CLASS_NAME = JpaSnowflakeIdentifierGenerator.class.getSimpleName();
-    private static final Logger logger = LoggerFactory.getLogger(JpaSnowflakeIdentifierGenerator.class);
-    /**
-     * 由于 Hibernate 的主键策略是多实例的，每一个 Entity 对应一个 IdentifierGenerator 实例，即使同一个策略，也会因为不同的 Entity 而创建实例。
-     * 因此这里必须提供一个静态的属性，可供多个主键策略实例共享同一个 IdGenerator 雪花算法实例
-     */
-    private static ApplicationContext applicationContext;
-    private static IdGenerator idGenerator;
+@RequiredArgsConstructor
+public class JpaSnowflakeIdentifierSimpleGenerator implements IdentifierGenerator {
+    public static final String CLASS_NAME = JpaSnowflakeIdentifierSimpleGenerator.class.getSimpleName();
+    private static final Logger logger = LoggerFactory.getLogger(JpaSnowflakeIdentifierSimpleGenerator.class);
+    private final IdGenerator idGenerator;
     /**
      * 每个 Entity 都会实例化一个 IdentifierGenerator 对象，因此这个 entityName 只对应一个指定 Entity 名称，而不会与其他的重复。
      */
@@ -71,16 +64,5 @@ public class JpaSnowflakeIdentifierGenerator implements IdentifierGenerator, App
             return "" + nextId;
         }
         return nextId;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        assert applicationContext != null;
-        idGenerator = applicationContext.getBean(IdGenerator.class);
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        JpaSnowflakeIdentifierGenerator.applicationContext = applicationContext;
     }
 }

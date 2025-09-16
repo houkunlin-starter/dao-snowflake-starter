@@ -1,11 +1,8 @@
 package com.houkunlin.dao.snowflake.starter.jpa;
 
 import org.hibernate.cfg.AvailableSettings;
-import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.jpa.spi.IdentifierGeneratorStrategyProvider;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +18,6 @@ import java.util.Map;
  *
  * @author HouKunLin
  */
-@ConditionalOnClass(IdentifierGenerator.class)
-@Component
 public class SnowflakeHibernatePropertiesCustomizer implements HibernatePropertiesCustomizer {
 
     private final Map<String, Class<?>> map = new HashMap<>();

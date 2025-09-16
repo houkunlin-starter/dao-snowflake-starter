@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @Data
 @ToString
 @EqualsAndHashCode
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConfigurationProperties("dao.snowflake")
 public class SnowflakeProperties {
     /**
